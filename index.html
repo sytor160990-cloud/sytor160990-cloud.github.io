@@ -4,706 +4,313 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Реальный эффект виртуального: как киберспорт может развивать общество</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #0a0a0a;
-            --secondary: #1a1a1a;
-            --accent: #ff4d00;
-            --text: #e8e8e8;
-            --text-secondary: #b0b0b0;
+            --primary-color: #003366;
+            --secondary-color: #990000;
+            --accent-color: #FFCC00;
+            --background-color: #f0f0f0;
+            --text-color: #222222;
+            --mono-font: 'Courier New', monospace;
         }
-
+        
         * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
-
-        body {
-            background: var(--primary);
-            color: var(--text);
+            background-color: var(--background-color);
+            color: var(--text-color);
             line-height: 1.6;
-            overflow-x: hidden;
         }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        .hero {
-            height: 100vh;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(255,77,0,0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255,77,0,0.05) 0%, transparent 50%);
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(0.5deg); }
-        }
-
-        .hero-content {
-            text-align: center;
-            z-index: 2;
-            max-width: 800px;
-            padding: 0 2rem;
-        }
-
-        .hero-title {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            line-height: 1.1;
-        }
-
-        .hero-subtitle {
-            font-size: 1.3rem;
-            font-weight: 300;
-            color: var(--text-secondary);
-            line-height: 1.4;
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: bounce 2s infinite;
-            color: var(--text-secondary);
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-            40% { transform: translateX(-50%) translateY(-10px); }
-            60% { transform: translateX(-50%) translateY(-5px); }
-        }
-
+        
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 20px;
         }
-
-        .section {
-            padding: 6rem 0;
-            position: relative;
-        }
-
-        .section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 1px;
-            height: 100%;
-            background: linear-gradient(to bottom, transparent 0%, var(--accent) 50%, transparent 100%);
-            opacity: 0.1;
-        }
-
-        .section-title {
-            font-size: 2.2rem;
-            font-weight: 600;
-            margin-bottom: 3rem;
+        
+        header {
             text-align: center;
-            position: relative;
-            color: var(--accent);
+            padding: 40px 0;
+            border-bottom: 3px solid var(--primary-color);
+            margin-bottom: 40px;
         }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -1rem;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 3px;
-            background: var(--accent);
-        }
-
-        .content-block {
-            margin-bottom: 4rem;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-
-        .content-block.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .text-content p {
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            text-align: justify;
-        }
-
-        .media-container {
-            position: relative;
-            background: var(--secondary);
-            border-radius: 8px;
-            padding: 2rem;
-            margin: 2rem 0;
-            min-height: 300px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .media-placeholder {
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-        }
-
-        .media-caption {
-            text-align: center;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            margin-top: 1rem;
-            font-style: italic;
-        }
-
-        .quote-block {
-            background: var(--secondary);
-            padding: 2.5rem;
-            margin: 3rem 0;
-            border-left: 4px solid var(--accent);
-            position: relative;
-            opacity: 0;
-            transform: translateX(-30px);
-            transition: all 0.8s ease;
-        }
-
-        .quote-block.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .quote-text {
-            font-size: 1.2rem;
-            font-weight: 400;
-            line-height: 1.6;
-            margin-bottom: 1rem;
-            font-style: italic;
-            color: var(--text);
-        }
-
-        .quote-author {
-            font-weight: 600;
-            color: var(--accent);
-            font-size: 1rem;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin: 3rem 0;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 1.5rem;
-            background: var(--secondary);
-            border-radius: 6px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .stat-number {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--accent);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        .conclusion {
-            background: var(--secondary);
-            padding: 3rem;
-            border-radius: 8px;
-            margin-top: 4rem;
-            border-left: 4px solid var(--accent);
-        }
-
-        .conclusion h3 {
-            color: var(--accent);
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .footer {
-            background: var(--secondary);
-            padding: 3rem 0 2rem;
-            text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            margin-top: 4rem;
-        }
-
-        /* Стили для графиков */
-        .chart-container {
-            width: 100%;
-            background: var(--secondary);
-            padding: 1rem;
-            border-radius: 8px;
-        }
-
-        .price-chart {
-            font-family: 'Inter', sans-serif;
-        }
-
-        .chart-line {
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
-            animation: drawChart 2s ease-in-out forwards;
-        }
-
-        @keyframes drawChart {
-            to {
-                stroke-dashoffset: 0;
-            }
-        }
-
-        .data-point {
-            opacity: 0;
-            animation: fadeInPoints 0.5s ease-in-out forwards;
-            animation-delay: 1.5s;
-        }
-
-        @keyframes fadeInPoints {
-            to {
-                opacity: 1;
-            }
-        }
-
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { r: 6; }
-            50% { r: 8; }
-            100% { r: 6; }
-        }
-
-        /* Стили для инфографики */
-        .infographic-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-
-        .infographic-item {
-            background: var(--secondary);
-            padding: 2rem;
-            border-radius: 8px;
-            text-align: center;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .infographic-number {
+        
+        h1 {
             font-size: 2.5rem;
             font-weight: 700;
-            color: var(--accent);
-            margin-bottom: 0.5rem;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+            color: var(--primary-color);
         }
-
-        .infographic-label {
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            font-weight: 300;
+        }
+        
+        .content-section {
+            margin-bottom: 60px;
+            padding: 30px;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            border-left: 5px solid var(--accent-color);
+            padding-left: 15px;
+            margin-top: 0;
+        }
+        
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .image-placeholder {
+            height: 200px;
+            background-color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--mono-font);
+            color: #666;
+            border: 1px solid #ccc;
+        }
+        
+        .chart-container {
+            height: 400px;
+            margin: 40px 0;
+            background-color: #f8f8f8;
+            padding: 20px;
+            border: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--mono-font);
+        }
+        
+        .quote {
+            font-style: italic;
+            border-left: 3px solid var(--secondary-color);
+            padding-left: 20px;
+            margin: 30px 0;
+            color: #555;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .stat-box {
+            padding: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
             font-size: 1rem;
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
         }
-
-        .infographic-bar {
-            height: 8px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 4px;
-            overflow: hidden;
-            margin: 1rem 0;
+        
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 3px solid var(--primary-color);
+            margin-top: 60px;
+            font-family: var(--mono-font);
+            color: #666;
         }
-
-        .infographic-fill {
-            height: 100%;
-            background: var(--accent);
-            border-radius: 4px;
-            animation: fillBar 1.5s ease-in-out forwards;
+        
+        /* Конструктивистские элементы */
+        .constructivist-element {
+            height: 10px;
+            background-color: var(--accent-color);
+            margin: 20px 0;
         }
-
-        @keyframes fillBar {
-            from { width: 0%; }
+        
+        .diagonal-line {
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, transparent 0%, var(--secondary-color) 50%, transparent 100%);
+            margin: 30px 0;
         }
-
+        
+        .mono-text {
+            font-family: var(--mono-font);
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-left: 3px solid var(--primary-color);
+            margin: 20px 0;
+        }
+        
+        .expert-name {
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .map-container {
+            height: 400px;
+            margin: 30px 0;
+            background-color: #f8f8f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--mono-font);
+            border: 1px solid #ddd;
+        }
+        
         @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2.2rem;
-            }
-            
-            .hero-subtitle {
-                font-size: 1.1rem;
-            }
-            
-            .section {
-                padding: 4rem 0;
-            }
-            
-            .container {
-                padding: 0 1rem;
-            }
-            
-            .section-title {
-                font-size: 1.8rem;
-            }
-
-            .infographic-container {
+            .image-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1 class="hero-title">Реальный эффект виртуального</h1>
-            <p class="hero-subtitle">Как киберспорт может развивать общество</p>
-        </div>
-        <div class="scroll-indicator">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 5v14M5 12l7 7 7-7"/>
-            </svg>
-        </div>
-    </section>
-
-    <!-- Introduction -->
-    <section class="section">
-        <div class="container">
-            <div class="content-block visible">
-                <div class="text-content">
-                    <p>В октябре 2025 года игроки популярной онлайн-игры Counter-Strike 2, суть которой заключается в командных матчах с применением огнестрельного и холодного оружия, столкнулись с резким падением стоимости внутриигрового инвентаря после очередного обновления. Оно позволило обменивать несколько дешевых предметов с шансом на выпадение более дорогого.</p>
-                    
-                    <p>Экономика игры испытала сильный кризис, вызванный резким ростом предложения подешевевших предметов и снижением спроса на более дорогие. Тысячи игроков по всему миру столкнулись с тем, что их игровой инвентарь фактически обесценился. Это спровоцировало волну возмущения в игровом сообществе, ведь некоторые игроки вкладывались в инвентарь как инвесторы, покупали редкие активы и держали их в своих аккаунтах в ожидании будущего роста.</p>
-                    
-                    <p>В этом материале разберем, как киберспорт, в частности игра Counter-Strike, сформировала целое комьюнити инвесторов в рисковые активы и как на рынке случился первый за всю историю игры экономический кризис.</p>
-                </div>
-            </div>
-
-            <!-- График падения цен -->
-            <div class="content-block">
-                <div class="chart-container">
-                    <svg width="100%" height="300" viewBox="0 0 800 300" class="price-chart">
-                        <!-- Оси -->
-                        <line x1="50" y1="250" x2="750" y2="250" stroke="#b0b0b0" stroke-width="2"/>
-                        <line x1="50" y1="50" x2="50" y2="250" stroke="#b0b0b0" stroke-width="2"/>
-                        
-                        <!-- Заголовок -->
-                        <text x="400" y="30" text-anchor="middle" fill="#e8e8e8" font-size="18" font-weight="600">
-                            Падение капитализации рынка скинов CS2 (октябрь 2025)
-                        </text>
-                        
-                        <!-- Данные графика -->
-                        <path d="M 100,60 L 200,65 L 300,70 L 400,60 L 450,150 L 500,220 L 550,180 L 600,120 L 650,100 L 700,90" 
-                              fill="none" stroke="#ff4d00" stroke-width="3" class="chart-line"/>
-                        
-                        <!-- Точки данных -->
-                        <circle cx="100" cy="60" r="4" fill="#ff4d00"/>
-                        <circle cx="200" cy="65" r="4" fill="#ff4d00"/>
-                        <circle cx="300" cy="70" r="4" fill="#ff4d00"/>
-                        <circle cx="400" cy="60" r="4" fill="#ff4d00"/>
-                        <circle cx="450" cy="150" r="4" fill="#ff4d00"/>
-                        <circle cx="500" cy="220" r="4" fill="#ff4d00"/>
-                        <circle cx="550" cy="180" r="4" fill="#ff4d00"/>
-                        <circle cx="600" cy="120" r="4" fill="#ff4d00"/>
-                        <circle cx="650" cy="100" r="4" fill="#ff4d00"/>
-                        <circle cx="700" cy="90" r="4" fill="#ff4d00"/>
-                        
-                        <!-- Подписи осей Y -->
-                        <text x="35" y="60" text-anchor="end" fill="#b0b0b0" font-size="12">$6B</text>
-                        <text x="35" y="150" text-anchor="end" fill="#b0b0b0" font-size="12">$3B</text>
-                        <text x="35" y="250" text-anchor="end" fill="#b0b0b0" font-size="12">$0</text>
-                        
-                        <!-- Подписи осей X -->
-                        <text x="100" y="270" text-anchor="middle" fill="#b0b0b0" font-size="12">15 окт</text>
-                        <text x="400" y="270" text-anchor="middle" fill="#b0b0b0" font-size="12">23 окт</text>
-                        <text x="700" y="270" text-anchor="middle" fill="#b0b0b0" font-size="12">31 окт</text>
-                        
-                        <!-- Ключевые точки -->
-                        <g class="data-point" data-value="6.0">
-                            <circle cx="400" cy="60" r="6" fill="#ff4d00" class="pulse"/>
-                            <text x="400" y="45" text-anchor="middle" fill="#ff4d00" font-size="12" font-weight="600">$6.0B</text>
-                        </g>
-                        
-                        <g class="data-point" data-value="3.0">
-                            <circle cx="500" cy="220" r="6" fill="#ff4d00" class="pulse"/>
-                            <text x="500" y="235" text-anchor="middle" fill="#ff4d00" font-size="12" font-weight="600">$3.0B</text>
-                        </g>
-                        
-                        <g class="data-point" data-value="4.5">
-                            <circle cx="700" cy="90" r="6" fill="#ff4d00" class="pulse"/>
-                            <text x="700" y="75" text-anchor="middle" fill="#ff4d00" font-size="12" font-weight="600">$4.5B</text>
-                        </g>
-                        
-                        <!-- Легенда -->
-                        <rect x="550" y="80" width="200" height="80" fill="#1a1a1a" stroke="#b0b0b0" stroke-width="1" rx="4"/>
-                        <text x="560" y="100" fill="#e8e8e8" font-size="12" font-weight="600">Ключевые точки:</text>
-                        <text x="560" y="120" fill="#e8e8e8" font-size="11">• 23 окт: Пик - $6.0 млрд</text>
-                        <text x="560" y="135" fill="#e8e8e8" font-size="11">• 25 окт: Обвал - $3.0 млрд</text>
-                        <text x="560" y="150" fill="#e8e8e8" font-size="11">• 31 окт: Восстановление - $4.5 млрд</text>
-                    </svg>
-                </div>
-                <div class="media-caption">Динамика капитализации рынка скинов CS2 в октябре 2025 года</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Market Development -->
-    <section class="section">
-        <div class="container">
-            <h2 class="section-title">Зарождение и развитие рынка</h2>
+    <div class="container">
+        <header>
+            <h1>РЕАЛЬНЫЙ ЭФФЕКТ ВИРТУАЛЬНОГО</h1>
+            <div class="subtitle">Как киберспорт может развивать общество</div>
+            <div class="constructivist-element"></div>
+        </header>
+        
+        <div class="content-section">
+            <h2>ЭКОНОМИЧЕСКИЙ КРИЗИС В CS2</h2>
+            <p>В октябре 2025 года игроки популярной онлайн-игры Counter-Strike 2, суть которой заключается в командных матчах с применением огнестрельного и холодного оружия, столкнулись с резким падением стоимости внутриигрового инвентаря после очередного обновления. Оно позволило обменивать несколько дешевых предметов с шансом на выпадение более дорогого.</p>
             
-            <div class="content-block">
-                <div class="text-content">
-                    <p>Рынок внутриигровых предметов в Counter-Strike появился в 2013 году с выходом обновления Arms Deal. Тогда игроки получили возможность приобретать, обменивать и продавать различные виды оружия, такие как AK-47 или Glock-18. Более 30 видов огнестрельного оружия и около 20 видов холодного стали доступными для кастомизации. Каждый предмет мог быть украшен «скином», а ножи, одинаковые до обновления у всех игроков, получили новые формы: керамбит, нож-бабочка, штык-нож и тп. Позже разработчики добавили в игру перчатки и формы аватаров. Это никак не повлияло на механику игры, однако ключевым фактором тут стало то, что появилось возможность покупки, продажи и обмена таких «скинов». Это сформировало экономическую экосистему в игре.</p>
-                </div>
-            </div>
-
-            <!-- Инфографика роста капитализации -->
-            <div class="content-block">
-                <div class="infographic-container">
-                    <div class="infographic-item">
-                        <div class="infographic-number">2013</div>
-                        <div class="infographic-label">Arms Deal Update</div>
-                        <div class="infographic-bar">
-                            <div class="infographic-fill" style="width: 5%;"></div>
-                        </div>
-                        <div class="infographic-label">$0.3B</div>
-                    </div>
-                    <div class="infographic-item">
-                        <div class="infographic-number">2015</div>
-                        <div class="infographic-label">Skin-gambling Boom</div>
-                        <div class="infographic-bar">
-                            <div class="infographic-fill" style="width: 15%;"></div>
-                        </div>
-                        <div class="infographic-label">$1.0B</div>
-                    </div>
-                    <div class="infographic-item">
-                        <div class="infographic-number">2021</div>
-                        <div class="infographic-label">Post-Pandemic Growth</div>
-                        <div class="infographic-bar">
-                            <div class="infographic-fill" style="width: 35%;"></div>
-                        </div>
-                        <div class="infographic-label">$3.5B</div>
-                    </div>
-                    <div class="infographic-item">
-                        <div class="infographic-number">2025</div>
-                        <div class="infographic-label">CS2 Launch Peak</div>
-                        <div class="infographic-bar">
-                            <div class="infographic-fill" style="width: 100%;"></div>
-                        </div>
-                        <div class="infographic-label">$6.0B</div>
-                    </div>
-                </div>
-                <div class="media-caption">Рост капитализации рынка скинов с 2013 по 2025 год</div>
-            </div>
-
-            <div class="content-block">
-                <div class="text-content">
-                    <p>С появлением рынка внутриигровых предметов начались первые инвестиции. В 2013 году, по оценке аналитика Neomarkets KZ Олега Калмановича, которые он привел автору, рынок стоил всего $200–300 млн.</p>
-                </div>
-                
-                <div class="quote-block">
-                    <div class="quote-text">«Это было самое зарождение ниши, почти без инфраструктуры и с редкими сделками»</div>
-                    <div class="quote-author">— Олег Калманович, аналитик Neomarkets KZ</div>
-                </div>
-
-                <div class="text-content">
-                    <p>Также, по его словам, когда появились ножи и редкие скины, то за этим начали формироваться первые инвестстратегии, построенные на их обмене-торговле.</p>
-                </div>
-
-                <div class="quote-block">
-                    <div class="quote-text">«Тогда рынок начал отделяться от внутриигровой экономики и формировать собственную стоимость. С ростом киберспортивного сообщества и появлением внешних площадок вроде CS.Money и ShadowPay обороты ускорились, капитализация выросла, а доходности у части коллекционеров могли доходить более чем до 40% годовых»</div>
-                    <div class="quote-author">— Олег Калманович, аналитик Neomarkets KZ</div>
-                </div>
-            </div>
-
-            <!-- Раздел для картинок с ножами 1 -->
-            <div class="content-block">
-                <div class="media-container">
-                    <div class="media-placeholder">
-                        [КАРТИНКА 1: Примеры редких ножей до обновления - Karambit Fade, Dragon Lore]
-                    </div>
-                </div>
-                <div class="media-caption">Легендарные скины, стоимость которых достигала десятков тысяч долларов</div>
-            </div>
-
-            <div class="content-block">
-                <div class="text-content">
-                    <p>Владимир Чернов, аналитик Freedom Finance Global, в разговоре с автором отметил, что в это время появлялись очень редкие предметы, такие как винтовки Dragon Lore и ножи Karambit Fade, за которые некоторые игроки платили до нескольких тысяч долларов. Помимо этого, в игровом сообществе формировалась культура ставок, где вместо денег использовали игровой инвентарь (Skin-gambling). К 2015 году через киберспортивные ставки на скины проходило примерно $5 млрд в год, что создавало дополнительный инвестиционный интерес.</p>
-                </div>
-
-                <div class="quote-block">
-                    <div class="quote-text">«Даже несмотря на вмешательство компании-разработчика игры Valve в skin-gambling, рынок сохранял ликвидность и к 2021 году совокупная капитализация скинов превысила $1 млрд»</div>
-                    <div class="quote-author">— Владимир Чернов, аналитик Freedom Finance Global</div>
-                </div>
-
-                <div class="text-content">
-                    <p>С 2018 по 2020 год Valve ограничила skin-gambling, это привело к смещению активности на созданные сообществом торговые площадки.</p>
-                </div>
-
-                <div class="quote-block">
-                    <div class="quote-text">«Рынок оставался живым, просто уходил глубже в P2P и азиатские площадки»</div>
-                    <div class="quote-author">— Владимир Чернов, аналитик Freedom Finance Global</div>
-                </div>
-            </div>
-
-            <div class="content-block">
-                <div class="text-content">
-                    <p>Запуск CS2 в 2023 году ускорил экономический рост. К январю 2023 года в публичных инвентарях находилось более 1,1 млрд скинов на сумму около $2,9 млрд. К середине 2025 года суммарная капитализация рынка CS2, по данным Чернова, удвоилась за пару лет и превысила $5 млрд.</p>
-                </div>
-
-                <div class="quote-block">
-                    <div class="quote-text">«Сегодня эта экосистема оценивается примерно в $6 млрд, а суточный оборот на площадках достигает $20–30 млн, однако октябрьское обновление стало триггером, который резко нарушил баланс. Возможность обменивать пять редких скинов на ножи и перчатки обрушила уникальность самых дорогих предметов и привела к потере около $2 млрд капитализации всего за несколько дней»</div>
-                    <div class="quote-author">— Олег Калманович, аналитик Neomarkets KZ</div>
-                </div>
+            <p>Экономика игры испытала сильный кризис, вызванный резким ростом предложения подешевевших предметов и снижением спроса на более дорогие. Тысячи игроков по всему миру столкнулись с тем, что их игровой инвентарь фактически обесценился. Это спровоцировало волну возмущения в игровом сообществе, ведь некоторые игроки вкладывались в инвентарь как инвесторы, покупали редкие активы и держали их в своих аккаунтах в ожидании будущего роста. В этом материале разберем, как киберспорт, в частности игра Counter-Strike, сформировала целое комьюнити инвесторов в рисковые активы и как на рынке случился первый за всю историю игры экономический кризис.</p>
+            
+            <div class="image-grid">
+                <div class="image-placeholder">ИЗОБРАЖЕНИЕ 1: График падения цен на скины</div>
+                <div class="image-placeholder">ИЗОБРАЖЕНИЕ 2: Пример редкого скина</div>
+                <div class="image-placeholder">ИЗОБРАЖЕНИЕ 3: Карта распределения игроков</div>
             </div>
         </div>
-    </section>
-
-    <!-- Crisis Section -->
-    <section class="section">
-        <div class="container">
-            <h2 class="section-title">Паника среди владельцев и покупателей игрового инвентаря</h2>
+        
+        <div class="diagonal-line"></div>
+        
+        <div class="content-section">
+            <h2>ЗАРОЖДЕНИЕ И РАЗВИТИЕ РЫНКА</h2>
+            <p>Рынок внутриигровых предметов в Counter-Strike появился в 2013 году с выходом обновления Arms Deal. Тогда игроки получили возможность приобретать, обменивать и продавать различные виды оружия, такие как AK-47 или Glock-18. Более 30 видов огнестрельного оружия и около 20 видов холодного оружия стали доступными для кастомизации. Каждый предмет мог быть украшен «скином», а ножи, одинаковые до обновления у всех игроков, получили новые формы: керамбит, нож-бабочка, штык-нож и тп. Позже разработчики добавили в игру перчатки и формы аватаров. Это никак не повлияло на механику игры, однако ключевым фактором тут стало то, что появилось возможность покупки, продажи и обмена таких «скинов». Это сформировало экономическую экосистему в игре.</p>
             
-            <div class="content-block">
-                <div class="quote-block">
-                    <div class="quote-text">«Рынок скинов Counter-Strike 2 переживает крупнейшее падение за все время существования игры. После обновления предложение резко выросло, и цены на топовые предметы рухнули»</div>
-                    <div class="quote-author">— Олег Калманович, аналитик Neomarkets KZ</div>
-                </div>
-
-                <div class="text-content">
-                    <p>Причиной, по его словам, является потеря уникальности и массовая распродажа предметов, которая усилила давление на рынок.</p>
-                </div>
+            <div class="chart-container">
+                График: Рост капитализации рынка скинов CS (2013-2025)
             </div>
-
-            <!-- Раздел для картинок с ножами 2 -->
-            <div class="content-block">
-                <div class="media-container">
-                    <div class="media-placeholder">
-                        [КАРТИНКА 2: Сравнение цен на ножи до и после обновления]
-                    </div>
-                </div>
-                <div class="media-caption">Визуализация изменения цен на популярные модели ножей после октябрьского патча</div>
+            
+            <p>С появлением рынка внутриигровых предметов начались первые инвестиции. В 2013 году, по оценке аналитика Neomarkets KZ <span class="expert-name">Олега Калмановича</span>, которые он привел автору, рынок стоил всего $200–300 млн. «Это было самое зарождение ниши, почти без инфраструктуры и с редкими сделками», — отметил он. Также, по его словам, когда появились ножи и редкие скины, то за этим начали формироваться первые инвестстратегии, построенные на их обмене-торговле. «Тогда рынок начал отделяться от внутриигровой экономики и формировать собственную стоимость. С ростом киберспортивного сообщества и появлением внешних площадок вроде CS.Money и ShadowPay обороты ускорились, капитализация выросла, а доходности у части коллекционеров могли доходить более чем до 40% годовых», — добавил он.</p>
+            
+            <div class="quote">
+                <span class="expert-name">Владимир Чернов</span>, аналитик Freedom Finance Global, в разговоре с автором отметил, что в это время появлялись очень редкие предметы, такие как винтовки Dragon Lore и ножи Karambit Fade, за которые некоторые игроки платили до нескольких тысяч долларов. Помимо этого, в игровом сообществе формировалась культура ставок, где вместо денег использовали игровой инвентарь (Skin-gambling). К 2015 году через киберспортивные ставки на скины проходило примерно $5 млрд в год, что создавало дополнительный инвестиционный интерес.
             </div>
-
-            <div class="content-block">
-                <div class="text-content">
-                    <p>В то же время, аналитик ФГ «Финам» Дмитрий Лозовой подтвердил, что рынок скинов сейчас действительно находится в стадии стабилизации, но возвращения докризисных котировок на дорогие предметы ожидать не стоит.</p>
-                </div>
-
-                <div class="quote-block">
-                    <div class="quote-text">«Реформа торговой экосистемы Valve изменила его фундаментальные принципы»</div>
-                    <div class="quote-author">— Дмитрий Лозовой, аналитик ФГ «Финам»</div>
-                </div>
-
-                <div class="text-content">
-                    <p>Лозовой также пояснил, что ранее ценность многих скинов строилась на уникальности и редкости, и фактически рынок был NFT-подобным. Новые правила изменили стимулы к продаже, и прежние ценовые ориентиры больше не работают. По словам Лозового, политика Valve нанесла сильный ущерб сотням тысяч портфелей, многие потеряли миллионы долларов.</p>
-                </div>
-
-                <div class="quote-block">
-                    <div class="quote-text">«Ножи сами по себе упали в цене многократно, и ожидать повторного взлёта цен не стоит — теперь практически любой игрок может позволить себе желанный нож, и данный эффект будет повторяться после выхода каждой новой операции»</div>
-                    <div class="quote-author">— Дмитрий Лозовой, аналитик ФГ «Финам»</div>
-                </div>
-            </div>
-
+            
+            <p>Чернов добавил, что сторонние рынки оттягивали ликвидность у площадки издателя игры Steam, но экосистема была стабильной, а капитализация росла. «Даже несмотря на вмешательство компании-разработчика игры Valve в skin-gambling, рынок сохранял ликвидность и к 2021 году совокупная капитализация скинов превысила $1 млрд», - подчеркнул Чернов.</p>
+            
+            <p>С 2018 по 2020 год Valve ограничила skin-gambling, это привело к смещению активности на созданные сообществом торговые площадки. «Рынок оставался живым, просто уходил глубже в P2P и азиатские площадки», — отмечает Чернов.</p>
+            
             <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-number">$6B</div>
-                    <div class="stat-label">Пик капитализации в октябре</div>
+                <div class="stat-box">
+                    <div class="stat-value">$2.9 млрд</div>
+                    <div class="stat-label">Капитализация рынка в январе 2023</div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-number">$3B</div>
-                    <div class="stat-label">Минимум после обновления</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">$4.5-5.5B</div>
-                    <div class="stat-label">Текущая оценка рынка</div>
+                <div class="stat-box">
+                    <div class="stat-value">$6 млрд</div>
+                    <div class="stat-label">Пиковая капитализация в октябре 2025</div>
                 </div>
             </div>
-
-            <div class="content-block">
-                <div class="quote-block">
-                    <div class="quote-text">«Рынок вполне может стабилизироваться на уровне около 50% прежних цен. Однако дальнейшая политика Valve может привести к новым всплескам волатильности цен, ведь цифровые активы подвержены тем же законам спекуляции и паники, что и реальные»</div>
-                    <div class="quote-author">— Олег Калманович, аналитик Neomarkets KZ</div>
-                </div>
-
-                <div class="text-content">
-                    <p>Чернов также уточнил, что капитализация «скинов» в CS2 в середине октября достигла исторического максимума в примерно $6 млрд, а на октябрьском обновлении максимально опускалась до примерно $3 млрд. Сейчас рынок частично восстановился и оценивается в $4,5–5,5 млрд. По его мнению, падение для массовых игровых скинов почти отыграно, а на среднем и верхнем сегменте рынка восстановление займет больше времени.</p>
-                </div>
-            </div>
-
-            <div class="media-container">
-                <div class="media-placeholder">
-                    [КАРТА: Географическое распределение игроков по данным Leetify на 2021 год]
-                </div>
-            </div>
-            <div class="media-caption">Подавляющее большинство игроков и инвесторов находится на территории РФ, США и Евросоюза</div>
-
-            <div class="text-content">
-                <p>Что касается влияния на экономику жителей тех или иных стран, то, судя по последним данным Leetify на 2021 год, подавляющее большинство игроков и инвесторов в «скины» находится на территории РФ, США и Евросоюза. Тем не менее, немалая часть игроков также проживает в Бразилии и Аргентине. Из этого можно сделать вывод, что пострадавшие находятся как на территории глобального севера, так и на территории глобального юга, что говорит о всемирном характере проблемы, и в этой ситуации решение Valve с высокой долей вероятности не имело под собой политических мотивов.</p>
+            
+            <p>Запуск CS2 в 2023 году ускорил экономический рост. К январю 2023 года в публичных инвентарях находилось более 1,1 млрд скинов на сумму около $2,9 млрд. К середине 2025 года суммарная капитализация рынка CS2, по данным Чернова, удвоилась за пару лет и превысила $5 млрд.</p>
+            
+            <div class="mono-text">
+                «Сегодня эта экосистема оценивается примерно в $6 млрд, а суточный оборот на площадках достигает $20–30 млн, однако октябрьское обновление стало триггером, который резко нарушил баланс. Возможность обменивать пять редких скинов на ножи и перчатки обрушила уникальность самых дорогих предметов и привела к потере около $2 млрд капитализации всего за несколько дней», - заключил Калманович.
             </div>
         </div>
-    </section>
-
-    <!-- Conclusion -->
-    <section class="section">
-        <div class="container">
-            <div class="conclusion">
-                <h3>Будут ли инвесторы продолжать вкладывать средства во внутриигровые предметы?</h3>
-                
-                <div class="text-content">
-                    <p>Киберспорт и внутриигровые рынки демонстрируют уникальную способность формировать экономические экосистемы с реальными финансовыми последствиями, создавая как возможности для инвестиций, так и риски. Рынок игры CS2 показывает, что цифровые активы, несмотря на массовый интерес игроков, остаются полностью зависимыми от решений компании-разработчика. Для инвесторов это означает, что оценка риска должна учитывать не только рыночные механизмы, но и решения издателя, которые могут изменить баланс предложения и спроса.</p>
-                    
-                    <p>В то же время, потенциал роста остаётся, особенно для ликвидных предметов, что делает рынок интересным для краткосрочных и среднесрочных инвестиций, но непредсказуемым для долгосрочных вложений. Такой шаг Valve подчеркивает, что киберспорт вышел за рамки развлечения и стал полноценной экономической и культурной силой, влияющей на общество и инвестиционное поведение миллионов участников сообщества.</p>
+        
+        <div class="diagonal-line"></div>
+        
+        <div class="content-section">
+            <h2>ПАНИКА СРЕДИ ВЛАДЕЛЬЦЕВ И ПОКУПАТЕЛЕЙ</h2>
+            <p>«Рынок скинов Counter-Strike 2 переживает крупнейшее падение за все время существования игры. После обновления предложение резко выросло, и цены на топовые предметы рухнули», — подчеркнул Калманович. Причиной, по его словам, является потеря уникальности и массовая распродажа предметов, которая усилила давление на рынок.</p>
+            
+            <div class="chart-container">
+                График: Падение капитализации рынка после октябрьского обновления 2025
+            </div>
+            
+            <p>В то же время, аналитик ФГ «Финам» <span class="expert-name">Дмитрий Лозовой</span> подтвердил, что рынок скинов сейчас действительно находится в стадии стабилизации, но возвращения докризисных котировок на дорогие предметы ожидать не стоит. «Реформа торговой экосистемы Valve изменила его фундаментальные принципы», - подчеркнул он.</p>
+            
+            <div class="mono-text">
+                «Реформа торговой экосистемы Valve изменила его фундаментальные принципы. Ранее ценность многих скинов строилась на уникальности и редкости, и фактически рынок был NFT-подобным. Новые правила изменили стимулы к продаже, и прежние ценовые ориентиры больше не работают». - <span class="expert-name">Дмитрий Лозовой</span>, аналитик ФГ «Финам»
+            </div>
+            
+            <p>По словам Лозового, политика Valve нанесла сильный ущерб сотням тысяч портфелей, многие потеряли миллионы долларов. «Ножи сами по себе упали в цене многократно, и ожидать повторного взлёта цен не стоит — теперь практически любой игрок может позволить себе желанный нож, и данный эффект будет повторяться после выхода каждой новой операции», — отмечает аналитик.</p>
+            
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-value">-50%</div>
+                    <div class="stat-label">Среднее падение цен на топовые скины</div>
                 </div>
-
-                <div class="quote-block" style="margin-top: 2rem; background: rgba(255,77,0,0.1);">
-                    <div class="quote-text">«Данный кейс первый в истории, когда создатели игры одним действием обрушили внутреннюю инфраструктуру рынка и капитализацию почти на $3 млрд. Долгосрочные крупные инвесторы, скорее всего, уйдут с рынка, осознав, что он управляемый»</div>
-                    <div class="quote-author">— Дмитрий Лозовой, аналитик ФГ «Финам»</div>
+                <div class="stat-box">
+                    <div class="stat-value">$2 млрд</div>
+                    <div class="stat-label">Потеря капитализации за несколько дней</div>
                 </div>
             </div>
+            
+            <p>«Рынок вполне может стабилизироваться на уровне около 50% прежних цен. Однако дальнейшая политика Valve может привести к новым всплескам волатильности цен, ведь цифровые активы подвержены тем же законам спекуляции и паники, что и реальные», - констатировал Калманович.</p>
+            
+            <p>Чернов также уточнил, что капитализация «скинов» в CS2 в середине октября достигла исторического максимума в примерно $6 млрд, а на октябрьском обновлении максимально опускалась до примерно $3 млрд. Сейчас рынок частично восстановился и оценивается в $4,5–5,5 млрд. По его мнению, падение для массовых игровых скинов почти отыграно, а на среднем и верхнем сегменте рынка восстановление займет больше времени.</p>
+            
+            <div class="map-container">
+                Карта: Распределение игроков CS2 по странам (данные Leetify 2021)
+            </div>
+            
+            <p>Что касается влияния на экономику жителей тех или иных стран, то, судя по последним данным Leetify на 2021 год, подавляющее большинство игроков и инвесторов в «скины» находится на территории РФ, США и Евросоюза. Тем не менее, немалая часть игроков также проживает в Бразилии и Аргентине. Из этого можно сделать вывод, что пострадавшие находятся как на территории глобального севера, так и на территории глобального юга, что говорит о всемирном характере проблемы, и в этой ситуации решение Valve с высокой долей вероятности не имело под собой политических мотивов. Данные по игрокам представлены в составленной автором карте.</p>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>Мультимедийный аналитический материал</p>
-            <p style="margin-top: 1rem; color: var(--text
+        
+        <div class="diagonal-line"></div>
+        
+        <div class="content-section">
+            <h2>БУДУЩЕЕ ИНВЕСТИЦИЙ В ВИРТУАЛЬНЫЕ АКТИВЫ</h2>
+            <p>По прогнозу опрошенных автором экспертов, рынок останется живым, но вернуться к уровням начала октября полностью невозможно из-за подорванного доверия к политике Valve. По оценке «Финама», экосистема CS2 сохранит уникальные масштабы и охват, но темпы роста и доходность инвестиций существенно снизятся. «Данный кейс первый в истории, когда создатели игры одним действием обрушили внутреннюю инфраструктуру рынка и капитализацию почти на $3 млрд. Долгосрочные крупные инвесторы, скорее всего, уйдут с рынка, осознав, что он управляемый», — констатирует Лозовой.</p>
+            
+            <div class="chart-container">
+                График: Прогноз восстановления рынка скинов CS2 (2025-2026)
+            </div>
+            
+            <p>Киберспорт и внутриигровые рынки демонстрируют уникальную способность формировать экономические экосистемы с реальными финансовыми последствиями, создавая как возможности для инвестиций, так и риски. Рынок игры CS2 показывает, что цифровые активы, несмотря на массовый интерес игроков, остаются полностью зависимыми от решений компании-разработчика. Для инвесторов это означает, что оценка риска должна учитывать не только рыночные механизмы, но и решения издателя, которые могут изменить баланс предложения и спроса.</p>
+            
+            <p>В то же время, потенциал роста остаётся, особенно для ликвидных предметов, что делает рынок интересным для краткосрочных и среднесрочных инвестиций, но непредсказуемым для долгосрочных вложений. Такой шаг Valve подчеркивает, что киберспорт вышел за рамки развлечения и стал полноценной экономической и культурной силой, влияющей на общество и инвестиционное поведение миллионов участников сообщества.</p>
+        </div>
+        
+        <footer>
+            <div class="constructivist-element"></div>
+            <p>Аналитический материал по экономике киберспорта | Октябрь 2025</p>
+        </footer>
+    </div>
+</body>
+</html>
